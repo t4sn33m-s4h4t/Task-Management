@@ -13,9 +13,9 @@ A simple, responsive task management application where users can add, edit, dele
 ### Frontend
 - React
 - Vite
-- react-beautiful-dnd (or any other drag-and-drop library)
+- react-beautiful-dnd 
 - Firebase Authentication
-- Axios (for API calls)
+- Axios  
 
 ### Backend
 - Express.js
@@ -26,7 +26,7 @@ A simple, responsive task management application where users can add, edit, dele
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/task-management-app.git
+git clone https://github.com/t4sn33m-s4h4t/Task-Management.git
 ```
 
 ### 2. Install frontend dependencies
@@ -44,7 +44,7 @@ npm install
 ```
 
 ### 4. Set up environment variables
-- Create a `.env` file in both frontend and backend directories.
+- Create a `.env` file in backend and `.env.local` in frontend directory.
 - Add the necessary credentials for Firebase Authentication and MongoDB URI.
 
 ### 5. Start the application
@@ -58,12 +58,11 @@ npm start
 cd frontend
 npm run dev
 ```
-
-The app should now be accessible at `http://localhost:3000` (or a port specified by Vite).
+ 
 
 ## Technologies Used
 - Frontend: React, Vite, Firebase Authentication, react-beautiful-dnd
-- Backend: Express.js, MongoDB, Firebase Admin SDK
+- Backend: Express.js, MongoDB, CORS, Mongoose
 - Database: MongoDB
 - Authentication: Firebase Authentication (Google sign-in)
 
@@ -86,8 +85,7 @@ The app should now be accessible at `http://localhost:3000` (or a port specified
    - Tasks are deleted from the database permanently.
 
 4. **Frontend UI:**
-   - A clean, modern, and responsive UI.
-   - Drag-and-drop functionality with `react-beautiful-dnd`.
+   - A clean, modern, and responsive UI with dark theme. 
    - The app is fully responsive and works smoothly on both desktop and mobile devices.
 
 5. **Backend API:**
@@ -96,8 +94,7 @@ The app should now be accessible at `http://localhost:3000` (or a port specified
      - `GET /tasks`: Retrieve all tasks for the logged-in user.
      - `PUT /tasks/:id`: Update task details (title, description, category).
      - `DELETE /tasks/:id`: Delete a task.
+   - Register new Users:
+     - `POST /users`: Add a new User. 
 
-## Bonus (Optional but Recommended):
-- Dark mode toggle.
-- Task due dates with color indicators for overdue tasks (e.g., red).
-- Simple activity log to track changes (e.g., "Task moved to Done").
+ 
