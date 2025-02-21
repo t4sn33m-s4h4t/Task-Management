@@ -34,7 +34,14 @@ npm install
 
 ### 3. Set up environment variables
 Create a `.env` file in the frontend directory and add any required environment variables such as Firebase credentials and API URLs.
-
+```bash
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
 ### 4. Start the frontend application
 To start the development server, run the following:
 ```bash
