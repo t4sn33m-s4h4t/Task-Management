@@ -5,7 +5,6 @@ const API_URL = 'https://task-management-backend-blush.vercel.app/api/users';
 
 export const saveUserToBackend = async (user) => {
     try {
-        console.log('User:', user);
         await axios.post(`${API_URL}`, user);
     } catch (error) {
         console.error('Error saving user to backend:', error);

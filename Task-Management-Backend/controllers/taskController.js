@@ -16,7 +16,6 @@ const addTask = async (req, res) => {
         const { title, description, category, userId, dueDate} = req.body;
         const newTask = new Task({ title, description, category, userId, dueDate });
         const savedTask = await newTask.save();
-        console.log(5)
         res.status(201).json(savedTask);
     } catch (error) {
         res.status(500).json({ message: 'Error adding task', error });

@@ -13,7 +13,6 @@ const LoginPage = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user; 
             const res = await saveUserToBackend({displayName: user.displayName, email: user.email, userId: user.uid});  
-            console.log(res)
             setUser(user);
             navigate('/');
         } catch (error) {

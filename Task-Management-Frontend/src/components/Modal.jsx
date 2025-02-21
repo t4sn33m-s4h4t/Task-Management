@@ -31,7 +31,6 @@ export const EditTaskModal = ({
     }
     onSave(editedTask);
   };
-  console.log(editedTask.dueDate)
   return (
     <Modal
       isOpen={isOpen}
