@@ -3,9 +3,9 @@ import { format, differenceInHours } from "date-fns";
 import { useActivityLog } from "../context/ActivityLogContext";
 
 const TaskCard = ({ task, provided, snapshot, isDarkMode, handleEdit, handleDelete }) => {
-  const { logActivity } = useActivityLog(); // Access the logActivity function from context
+  const { logActivity } = useActivityLog(); 
 
-  // Format the date for display
+  
   const formatDate = (dateString) => {
     if (!dateString) return "No date";
     try {
@@ -15,7 +15,7 @@ const TaskCard = ({ task, provided, snapshot, isDarkMode, handleEdit, handleDele
     }
   };
 
-  // Determine the color of the due date based on urgency
+  
   const getDueDateColor = (dueDate) => {
     if (!dueDate) return isDarkMode ? "text-gray-400" : "text-gray-600";
 
@@ -51,32 +51,27 @@ const TaskCard = ({ task, provided, snapshot, isDarkMode, handleEdit, handleDele
         ${snapshot.isDragging ? "z-50" : "z-0"}`
       }
       style={provided.draggableProps.style}
-    >
-      {/* Drag handle */}
+    > 
       <div {...provided.dragHandleProps} className="pb-3 cursor-grab">
         <div
           className={`w-6 h-1 rounded-full ${isDarkMode ? "bg-purple-600" : "bg-purple-300"}`}
         />
       </div>
-
-      {/* Task title */}
+ 
       <h3 className="font-semibold text-sm mb-2">{task.title}</h3>
-
-      {/* Task description */}
+ 
       {task.description && (
         <p className={`text-sm mb-3 ${isDarkMode ? "text-purple-300" : "text-purple-700"}`}>
           {task.description}
         </p>
       )}
-
-      {/* Footer Section */}
+ 
       <div className="flex justify-between items-center">
-        {/* Due date */}
+      
         <time className={`text-xs ${getDueDateColor(task.dueDate)}`}>
           {task.dueDate ? formatDate(task.dueDate) : "No due date"}
         </time>
-
-        {/* Edit and Delete buttons */}
+ 
         <div className="flex space-x-2">
           <button
             onClick={onEdit}

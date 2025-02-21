@@ -73,7 +73,7 @@ const TaskBoard = () => {
         order: destination.index,
       });
   
-      // Log the task movement only if the source and destination categories are different
+      
       if (sourceCategory !== destinationCategory) {
         logActivity(`Task "${movedItem.title}" moved from ${sourceCategory} to ${destinationCategory}.`);
       }
@@ -93,7 +93,7 @@ const TaskBoard = () => {
       setEditingTask(null);
       fetchTasks();
 
-      // Log the task edit
+      
       logActivity(`Task "${updatedTask.title}" was edited.`);
     } catch (error) {
       console.error("Error updating task:", error);
@@ -113,7 +113,7 @@ const TaskBoard = () => {
               await deleteTask(taskId);
               fetchTasks();
 
-              // Log the task deletion
+              
               logActivity(`Task "${task.title}" was deleted.`);
             } catch (error) {
               console.error("Error deleting task:", error);
@@ -134,7 +134,7 @@ const TaskBoard = () => {
       setNewTask({ title: "", description: "", category: "To-Do" });
       fetchTasks();
 
-      // Log the task creation
+      
       logActivity(`Task "${taskData.title}" was created.`);
     } catch (error) {
       console.error("Error adding task:", error);
