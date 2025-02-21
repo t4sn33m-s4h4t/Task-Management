@@ -5,7 +5,7 @@
 This is the frontend of the Task Management Application, built using React and Vite. Users can manage tasks by adding, editing, deleting, and dragging tasks between different categories. The UI is fully responsive, designed to provide a clean, modern, and mobile-friendly experience.
 
 ## Live Link
-- [Frontend Application](https://examplefrontendlink.com)
+- [Frontend Application](https://task-management-982d7.web.app)
 
 ## Dependencies
 

@@ -5,8 +5,8 @@
 A simple, responsive task management application where users can add, edit, delete, and reorder tasks using a drag-and-drop interface. Tasks are categorized into three sections: To-Do, In Progress, and Done. Changes are saved instantly to the MongoDB database to maintain persistence.
 
 ## Live Links
-- [Frontend](https://examplefrontendlink.com)
-- [Backend API](https://examplebackendlink.com)
+- [Frontend](https://task-management-982d7.web.app)
+- [Backend API](https://task-management-backend-blush.vercel.app/)
 
 ## Dependencies
 

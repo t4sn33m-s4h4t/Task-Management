@@ -75,13 +75,13 @@ const TaskCard = ({ task, provided, snapshot, isDarkMode, handleEdit, handleDele
         <div className="flex space-x-2">
           <button
             onClick={onEdit}
-            className="text-blue-400 cursor-pointer hover:text-blue-500 text-xs transition-colors"
+            className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-700 cursor-pointer text-white  text-xs transition-colors"
           >
             Edit
           </button>
           <button
             onClick={onDelete}
-            className="text-red-400 cursor-pointer hover:text-red-500 text-xs transition-colors"
+            className="px-4 py-2 rounded-md bg-red-500 hover:bg-red-700 cursor-pointer text-white  text-xs transition-colors"
           >
             Delete
           </button>
