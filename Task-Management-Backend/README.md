@@ -1,5 +1,4 @@
-
-# Task Management Application
+# Backend - Task Management 
 
 ## Short Description
 A simple, responsive task management application where users can add, edit, delete, and reorder tasks using a drag-and-drop interface. Tasks are categorized into three sections: To-Do, In Progress, and Done. Changes are saved instantly to the MongoDB database to maintain persistence.
