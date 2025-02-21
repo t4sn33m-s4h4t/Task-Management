@@ -3,18 +3,21 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { getTasks, updateTask, deleteTask, addTask } from "../services/taskService";
 import { useUser } from "../context/UserContext";
 import { useTheme } from "../context/ThemeContext";
+import { useActivityLog } from "../context/ActivityLogContext";  
 import { EditTaskModal, AddTaskModal } from "./Modal";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Column from "./Column";
+import ActivityLog from "./ActivityLog";
 
 const TaskBoard = () => {
   const { user } = useUser();
   const { isDarkMode } = useTheme();
+  const { logActivity } = useActivityLog();  
   const [tasks, setTasks] = useState({
     "To-Do": [],
     "In Progress": [],
-    "Done": [],
+    Done: [],
   });
   const [editingTask, setEditingTask] = useState(null);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -44,13 +47,13 @@ const TaskBoard = () => {
     setIsDragging(false);
     const { source, destination } = result;
     if (!destination) return;
-
+  
     try {
       const sourceCategory = source.droppableId;
       const destinationCategory = destination.droppableId;
       const sourceItems = Array.from(tasks[sourceCategory]);
       const [movedItem] = sourceItems.splice(source.index, 1);
-
+  
       if (sourceCategory === destinationCategory) {
         sourceItems.splice(destination.index, 0, movedItem);
         setTasks((prev) => ({ ...prev, [sourceCategory]: sourceItems }));
@@ -64,11 +67,16 @@ const TaskBoard = () => {
           [destinationCategory]: destinationItems,
         }));
       }
-
+  
       await updateTask(movedItem._id, {
         category: destinationCategory,
         order: destination.index,
       });
+  
+      // Log the task movement only if the source and destination categories are different
+      if (sourceCategory !== destinationCategory) {
+        logActivity(`Task "${movedItem.title}" moved from ${sourceCategory} to ${destinationCategory}.`);
+      }
     } catch (error) {
       console.error("Error updating task position:", error);
       fetchTasks();
@@ -84,6 +92,9 @@ const TaskBoard = () => {
       await updateTask(updatedTask._id, updatedTask);
       setEditingTask(null);
       fetchTasks();
+
+      // Log the task edit
+      logActivity(`Task "${updatedTask.title}" was edited.`);
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -98,8 +109,12 @@ const TaskBoard = () => {
           label: "Yes",
           onClick: async () => {
             try {
+              const task = tasks["To-Do"].concat(tasks["In Progress"], tasks["Done"]).find((t) => t._id === taskId);
               await deleteTask(taskId);
               fetchTasks();
+
+              // Log the task deletion
+              logActivity(`Task "${task.title}" was deleted.`);
             } catch (error) {
               console.error("Error deleting task:", error);
             }
@@ -118,6 +133,9 @@ const TaskBoard = () => {
       setIsAddTaskModalOpen(false);
       setNewTask({ title: "", description: "", category: "To-Do" });
       fetchTasks();
+
+      // Log the task creation
+      logActivity(`Task "${taskData.title}" was created.`);
     } catch (error) {
       console.error("Error adding task:", error);
     }
@@ -129,7 +147,6 @@ const TaskBoard = () => {
         isDarkMode ? "bg-purple-900 text-white" : "bg-purple-100 text-purple-900"
       } transition-colors duration-300`}
     >
-      
       <button
         onClick={() => setIsAddTaskModalOpen(true)}
         className={`
@@ -156,7 +173,6 @@ const TaskBoard = () => {
         </svg>
       </button>
 
-
       <DragDropContext
         onDragStart={() => setIsDragging(true)}
         onDragEnd={(result) => {
@@ -177,7 +193,7 @@ const TaskBoard = () => {
           ))}
         </div>
       </DragDropContext>
- 
+
       <EditTaskModal
         isOpen={!!editingTask}
         task={editingTask}
@@ -191,6 +207,8 @@ const TaskBoard = () => {
         onAdd={handleAddTask}
         categories={Object.keys(tasks)}
       />
+
+      <ActivityLog />
     </div>
   );
 };

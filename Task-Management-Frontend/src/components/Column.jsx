@@ -19,7 +19,7 @@ const Column = ({ category, tasks, isDarkMode, handleEdit, handleDelete }) => {
             ${
               snapshot.isDraggingOver
                 ? isDarkMode
-                  ? "bg-purple-800"
+                  ? "bg-purple-950"
                   : "bg-purple-200"
                 : ""
             }

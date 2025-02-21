@@ -1,15 +1,40 @@
 import React from "react";
-import { format } from "date-fns";
+import { format, differenceInHours } from "date-fns";
+import { useActivityLog } from "../context/ActivityLogContext";
 
 const TaskCard = ({ task, provided, snapshot, isDarkMode, handleEdit, handleDelete }) => {
+  const { logActivity } = useActivityLog(); // Access the logActivity function from context
+
+  // Format the date for display
   const formatDate = (dateString) => {
-    console.log(task)
     if (!dateString) return "No date";
     try {
-      return format(new Date(dateString), "MMM dd, HH:mm");
+      return format(new Date(dateString), "MMM dd yyyy");
     } catch (error) {
       return "Invalid date";
     }
+  };
+
+  // Determine the color of the due date based on urgency
+  const getDueDateColor = (dueDate) => {
+    if (!dueDate) return isDarkMode ? "text-gray-400" : "text-gray-600";
+
+    const now = new Date();
+    const due = new Date(dueDate);
+    const hoursDiff = differenceInHours(due, now);
+
+    if (hoursDiff < 0) return "text-red-500 font-semibold";
+    if (hoursDiff < 24) return "text-yellow-500 font-semibold";
+    return "text-green-500 font-semibold";
+  };
+
+  
+  const onEdit = () => {
+    handleEdit(task);  
+  };
+ 
+  const onDelete = () => {
+    handleDelete(task._id); 
   };
 
   return (
@@ -17,64 +42,50 @@ const TaskCard = ({ task, provided, snapshot, isDarkMode, handleEdit, handleDele
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      className={`
-        p-4 rounded-lg w-full
+      className={
+        `p-4 rounded-lg w-full
         ${isDarkMode ? "bg-purple-800 text-white" : "bg-purple-100 text-purple-900"}
         ${snapshot.isDragging ? "shadow-lg transform scale-105" : "shadow-sm"}
         transition-all duration-200
         ${!snapshot.isDragging && "hover:shadow-md"}
-        ${snapshot.isDragging ? "z-50" : "z-0"}
-      `}
+        ${snapshot.isDragging ? "z-50" : "z-0"}`
+      }
       style={provided.draggableProps.style}
     >
-      
+      {/* Drag handle */}
       <div {...provided.dragHandleProps} className="pb-3 cursor-grab">
         <div
-          className={`w-6 h-1 rounded-full ${
-            isDarkMode ? "bg-purple-600" : "bg-purple-300"
-          }`}
+          className={`w-6 h-1 rounded-full ${isDarkMode ? "bg-purple-600" : "bg-purple-300"}`}
         />
       </div>
 
-
+      {/* Task title */}
       <h3 className="font-semibold text-sm mb-2">{task.title}</h3>
 
-
+      {/* Task description */}
       {task.description && (
-        <p
-          className={`text-sm mb-3 ${
-            isDarkMode ? "text-purple-300" : "text-purple-700"
-          }`}
-        >
+        <p className={`text-sm mb-3 ${isDarkMode ? "text-purple-300" : "text-purple-700"}`}>
           {task.description}
         </p>
       )}
 
-
+      {/* Footer Section */}
       <div className="flex justify-between items-center">
-
-
-        <time
-          className={`text-xs ${
-            isDarkMode ? "text-purple-400" : "text-purple-600"
-          }`}
-        >
-          {
-            
-          formatDate(task.timestamp)
-          }
+        {/* Due date */}
+        <time className={`text-xs ${getDueDateColor(task.dueDate)}`}>
+          {task.dueDate ? formatDate(task.dueDate) : "No due date"}
         </time>
 
-
+        {/* Edit and Delete buttons */}
         <div className="flex space-x-2">
           <button
-            onClick={() => handleEdit(task)}
+            onClick={onEdit}
             className="text-blue-400 cursor-pointer hover:text-blue-500 text-xs transition-colors"
           >
             Edit
           </button>
           <button
-            onClick={() => handleDelete(task._id)}
+            onClick={onDelete}
             className="text-red-400 cursor-pointer hover:text-red-500 text-xs transition-colors"
           >
             Delete

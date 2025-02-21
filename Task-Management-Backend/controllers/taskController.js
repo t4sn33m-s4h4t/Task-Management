@@ -13,8 +13,8 @@ const getTasks = async (req, res) => {
  
 const addTask = async (req, res) => {
     try { 
-        const { title, description, category, userId } = req.body;
-        const newTask = new Task({ title, description, category, userId });
+        const { title, description, category, userId, dueDate} = req.body;
+        const newTask = new Task({ title, description, category, userId, dueDate });
         const savedTask = await newTask.save();
         console.log(5)
         res.status(201).json(savedTask);
